@@ -71,7 +71,7 @@ genPad :: Pad
 genPad = (0, 0, padSize, white)
 
 drawPad :: Pad -> Picture
-drawPad (p, v, s, c) = color c (translate p (-maxHight/2) (line [(-s/2, 0),(s/2,0)]))
+drawPad (p, v, s, c) = color c (translate p (-maxHight/2+1) (line [(-s/2, 0),(s/2,0)]))
 
 updatePad :: Float -> Shape -> Shape
 updatePad dt (Pad (p, v, s, c)) = Pad (p+v*dt, v, s, c)
@@ -127,8 +127,8 @@ colisionsBlockBall dt (Block ((x2,y2),w,h,_)) (Ball ((x1,y1),(dx,dy),s,_))
 
 colisionsBallWall :: Float -> Shape -> Shape
 colisionsBallWall dt (Ball ((x,y),(dx,dy),s,c))
-    | x+dt*dx > maxWidth/2 || x+dt*dx < -maxWidth/2 = Ball ((x,y),(-dx,dy),s,c)
-    | y+dt*dy > maxHight/2 = Ball ((x,y),(dx,-dy),s,c)
+    | x+dt*dx+s > maxWidth/2 || x+dt*dx-s < -maxWidth/2 = Ball ((x,y),(-dx,dy),s,c)
+    | y+dt*dy+s > maxHight/2 = Ball ((x,y),(dx,-dy),s,c)
     | otherwise = Ball ((x,y),(dx,dy),s,c)
 
 colisionsBallBlock :: Float -> Shape -> Shape -> Shape
