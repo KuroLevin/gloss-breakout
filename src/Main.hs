@@ -74,7 +74,7 @@ drawPad :: Pad -> Picture
 drawPad (p, v, s, c) = color c (translate p (-maxHight/2+1) (line [(-s/2, 0),(s/2,0)]))
 
 updatePad :: Float -> Shape -> Shape
-updatePad dt (Pad (p, v, s, c)) = Pad (p+v*dt, v, s, c)
+updatePad dt (Pad (p, v, s, c)) = Pad ((max (min (maxWidth/2) (p+v*dt)) (-maxWidth/2)), v, s, c)
 
 -- Ball
 
@@ -178,9 +178,11 @@ render shapes = pictures (map drawShape shapes)
 
 
 react :: Event -> [Shape] -> [Shape]
+react event [] = []
 react (EventKey (SpecialKey KeyLeft) Down _ _) ((Pad (p, v, s, c)):xs) = (Pad (p, -padSpeed, s, c)):xs
 react (EventKey (SpecialKey KeyRight) Down _ _) ((Pad (p, v, s, c)):xs) = (Pad (p, padSpeed, s, c)):xs
 react _ ((Pad (p, v, s, c)):xs) = (Pad (p, 0, s, c)):xs
+react event (x:xs) = x : (react event xs)
 
 
 
