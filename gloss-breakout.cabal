@@ -2,7 +2,7 @@ name:                gloss-breakout
 version:             0.1.0.0
 synopsis:            Simple Gloss Breakout game
 homepage:            https://github.com/KuroLevin/gloss-breakout
-license:             None
+license:             GPLv3
 license-file:        LICENSE
 author:              Pedro Moreno
 maintainer:          up201207840@fc.up.pt
